@@ -17,8 +17,19 @@ const terminalLines = [
 const BootSequence = ({ onComplete }: { onComplete: () => void }) => {
   const [lines, setLines] = useState<string[]>([]);
   const [isFinished, setIsFinished] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
 
   useEffect(() => {
+    // Hydration safe check for session storage
+    const hasBooted = sessionStorage.getItem("system_booted");
+    
+    if (hasBooted === "true") {
+      onComplete();
+      return;
+    }
+
+    setShouldRender(true);
+
     let currentLine = 0;
     const interval = setInterval(() => {
       if (currentLine < terminalLines.length) {
@@ -26,6 +37,7 @@ const BootSequence = ({ onComplete }: { onComplete: () => void }) => {
         currentLine++;
       } else {
         clearInterval(interval);
+        sessionStorage.setItem("system_booted", "true");
         setTimeout(() => setIsFinished(true), 500);
         setTimeout(() => onComplete(), 1000);
       }
@@ -33,6 +45,8 @@ const BootSequence = ({ onComplete }: { onComplete: () => void }) => {
 
     return () => clearInterval(interval);
   }, [onComplete]);
+
+  if (!shouldRender) return null;
 
   return (
     <AnimatePresence>
