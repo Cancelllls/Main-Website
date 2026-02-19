@@ -34,7 +34,7 @@ export default function RootLayout({
               <feFuncG type="discrete" tableValues="0 1" />
               <feFuncB type="discrete" tableValues="0 1" />
             </feComponentTransfer>
-          </feColorMatrix>
+          </filter>
         </svg>
         <InteractiveBackground />
         <div className="crt-overlay" aria-hidden="true" />
