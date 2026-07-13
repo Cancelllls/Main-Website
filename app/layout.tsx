@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
+import AnimatedBackground from "@/components/ui/AnimatedBackground";
 import "./globals.css";
 
 const inter = Inter({
@@ -24,6 +25,7 @@ export default function RootLayout({
         inter.variable,
         "bg-[#0a0a0a] text-[#ededed] antialiased font-sans selection:bg-blue-500/30"
       )}>
+        <AnimatedBackground />
         <main className="relative z-10 min-h-screen">
           {children}
         </main>
