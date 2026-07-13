@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import AnimatedBackground from "@/components/ui/AnimatedBackground";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/ui/Navbar";
+import LoadingScreen from "@/components/ui/LoadingScreen";
 import "./globals.css";
 
 const inter = Inter({
@@ -28,11 +29,13 @@ export default function RootLayout({
         "bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-[#ededed] antialiased font-sans selection:bg-blue-500/30 transition-colors"
       )}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <AnimatedBackground />
-          <Navbar />
-          <main className="relative z-10 min-h-screen">
-            {children}
-          </main>
+          <LoadingScreen>
+            <AnimatedBackground />
+            <Navbar />
+            <main className="relative z-10 min-h-screen">
+              {children}
+            </main>
+          </LoadingScreen>
         </ThemeProvider>
       </body>
     </html>

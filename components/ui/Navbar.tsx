@@ -3,18 +3,14 @@
 import React from "react";
 import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
+import { LogoSVG } from "./LoadingScreen";
 
 export function Navbar() {
   return (
     <nav className="fixed top-0 w-full z-50 bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-md border-b border-gray-200 dark:border-[#222] transition-colors">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          {/* SVG Logo with C. and blue dot */}
-          <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="100" height="100" rx="20" className="fill-gray-100 dark:fill-[#111]" />
-            <path d="M65 35C55 25 35 25 35 50C35 75 55 75 65 65" stroke="currentColor" className="text-black dark:text-white" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
-            <circle cx="75" cy="65" r="8" fill="#3b82f6" />
-          </svg>
+        <Link href="/" className="flex items-center gap-2 group">
+          <LogoSVG className="w-10 h-10 group-hover:scale-105 transition-transform duration-300" />
           <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
             Cancellls
           </span>
