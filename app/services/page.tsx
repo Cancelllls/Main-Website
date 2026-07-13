@@ -5,7 +5,17 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowLeft, Code2, Layout, Smartphone, Database, Globe, Cpu } from "lucide-react";
 
-const ServiceCard = ({ title, description, icon: Icon, delay = 0 }: any) => (
+const ServiceCard = ({ 
+  title, 
+  description, 
+  icon: Icon, 
+  delay = 0 
+}: { 
+  title: string; 
+  description: string; 
+  icon: React.ElementType; 
+  delay?: number;
+}) => (
   <motion.div
     initial={{ opacity: 0, y: 30 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -37,9 +47,8 @@ export default function ServicesPage() {
         <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-gray-900 dark:text-white mb-6">
           Premium <span className="text-blue-500">Services.</span>
         </h1>
-        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 font-light max-w-3xl">
-          End-to-end development solutions tailored for startups and enterprise clients.
-          Combining stunning design with highly scalable engineering.
+        <p className="text-xl text-gray-600 dark:text-gray-400 font-light">
+          Don&apos;t just build another app. Build a premium digital experience that your users will fall in love with. Let&apos;s build the future together.
         </p>
       </motion.div>
 
