@@ -65,6 +65,54 @@ const ServiceCard = ({
   );
 };
 
+const ContactForm = () => {
+  const [status, setStatus] = React.useState('idle');
+  const [formData, setFormData] = React.useState({ name: '', email: '', message: '' });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+    try {
+      const res = await fetch('https://mail.cancellls.com/api/mail/public-contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      if (!res.ok) throw new Error('Failed to send');
+      setStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+      setTimeout(() => setStatus('idle'), 5000);
+    } catch {
+      setStatus('error');
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="mt-12 bg-white/10 p-8 rounded-3xl backdrop-blur-md border border-white/20 text-left max-w-2xl mx-auto relative z-20">
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-white text-sm font-bold mb-2">Name</label>
+            <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-5 py-4 rounded-xl bg-black/20 border border-white/10 text-white placeholder-white/50 focus:outline-none focus:border-white/50 transition-colors" placeholder="John Doe" />
+          </div>
+          <div>
+            <label className="block text-white text-sm font-bold mb-2">Email</label>
+            <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full px-5 py-4 rounded-xl bg-black/20 border border-white/10 text-white placeholder-white/50 focus:outline-none focus:border-white/50 transition-colors" placeholder="john@example.com" />
+          </div>
+        </div>
+        <div>
+          <label className="block text-white text-sm font-bold mb-2">Message</label>
+          <textarea required value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} rows={4} className="w-full px-5 py-4 rounded-xl bg-black/20 border border-white/10 text-white placeholder-white/50 focus:outline-none focus:border-white/50 transition-colors resize-none" placeholder="Tell me about your project..."></textarea>
+        </div>
+        <button disabled={status === 'loading' || status === 'success'} type="submit" className="w-full py-4 bg-white text-blue-600 font-bold rounded-xl hover:bg-gray-100 transition-colors flex justify-center items-center gap-2 disabled:opacity-80">
+          {status === 'loading' ? 'Sending...' : status === 'success' ? 'Message Sent!' : 'Send Message'}
+        </button>
+        {status === 'error' && <p className="text-red-300 text-sm text-center mt-2">Failed to send message. Please try again.</p>}
+      </div>
+    </form>
+  )
+};
+
 export default function Home() {
   const { scrollYProgress } = useScroll();
   const y1 = useTransform(scrollYProgress, [0, 1], [0, 300]);
@@ -282,18 +330,16 @@ export default function Home() {
         </section>
 
         {/* Testimonials/CTA */}
-        <section className="py-32 relative z-10">
+        <section id="contact" className="py-32 relative z-10">
           <div className="max-w-5xl mx-auto px-6 text-center">
-            <FadeIn className="p-16 md:p-24 bg-blue-600 rounded-[3rem] shadow-2xl shadow-blue-500/20 overflow-hidden relative">
+            <FadeIn className="p-8 md:p-16 bg-blue-600 rounded-[3rem] shadow-2xl shadow-blue-500/20 overflow-hidden relative">
               <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
               <div className="relative z-10">
-                <h2 className="text-4xl md:text-6xl font-black text-white mb-8 leading-tight">Ready to build the future?</h2>
-                <p className="text-blue-100 text-xl md:text-2xl mb-12 max-w-2xl mx-auto font-light">
-                  Let's collaborate to build something extraordinary. Drop me a line and let's discuss your next big idea.
+                <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">Ready to build the future?</h2>
+                <p className="text-blue-100 text-xl mb-10 max-w-2xl mx-auto font-light">
+                  Let's collaborate to build something extraordinary. Fill out the form below and let's discuss your next big idea.
                 </p>
-                <a href="mailto:contact@cancellls.com" className="inline-flex px-10 py-5 bg-white text-blue-600 font-black rounded-full hover:bg-gray-100 hover:scale-105 transition-all shadow-xl text-lg gap-3 items-center">
-                  <Mail className="w-6 h-6" /> Get In Touch Today
-                </a>
+                <ContactForm />
               </div>
             </FadeIn>
           </div>
