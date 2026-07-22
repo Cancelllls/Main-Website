@@ -178,12 +178,16 @@ export default function Home() {
               transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="mt-14 flex flex-col sm:flex-row gap-5 justify-center items-center"
             >
-              <Link 
+              <a 
                 href="#contact" 
-                className="w-full sm:w-auto px-10 py-5 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 hover:scale-105 transition-all flex items-center justify-center gap-3 shadow-xl shadow-blue-500/30 text-lg"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="w-full sm:w-auto px-10 py-5 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 hover:scale-105 transition-all flex items-center justify-center gap-3 shadow-xl shadow-blue-500/30 text-lg cursor-pointer"
               >
                 Start a Project <ArrowRight className="w-5 h-5" />
-              </Link>
+              </a>
               <Link 
                 href="/mywork" 
                 className="w-full sm:w-auto px-10 py-5 bg-white dark:bg-[#111] border-2 border-gray-200 dark:border-[#333] text-gray-900 dark:text-white font-semibold rounded-full hover:bg-gray-50 dark:hover:bg-[#222] hover:scale-105 transition-all flex items-center justify-center gap-2 shadow-lg text-lg group"
